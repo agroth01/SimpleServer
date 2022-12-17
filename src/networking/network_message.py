@@ -13,6 +13,24 @@ class NetworkMessage:
         """
         self.headers.append(header)
 
+    def has_header(self, header_name):
+        """
+        Checks if the message has a header with the given name.
+        """
+        for header in self.headers:
+            if header.name == header_name:
+                return True
+        return False
+
+    def get_header(self, header_name):
+        """
+        Gets the header with the given name.
+        """
+        for header in self.headers:
+            if header.name == header_name:
+                return header
+        return None
+
     def set_body(self, body):
         """
         Sets the body of the message.
@@ -40,16 +58,39 @@ class NetworkMessage:
         """
         serialized = MESSAGE_PREFIX
         for header in self.headers:
-            serialized += header + HEADER_SEPARATOR
-        serialized += BODY_SEPARATOR + self.body + BODY_SEPARATOR
+            serialized += str(header) + HEADER_SEPARATOR
+        serialized += BODY_SEPARATOR + self.body
         return serialized
 
     def __deserialize(self, serialized):
         """
         Deserializes the headers and body from a string.
         """
-        serialized = serialized.replace(MESSAGE_PREFIX, "")
-        serialized = serialized.replace(BODY_SEPARATOR, "")
-        parts = serialized.split(HEADER_SEPARATOR)
-        self.headers = parts[:-1]
-        self.body = parts[-1]
+        # remove prefix
+        serialized = serialized[1:]
+
+        # split into headers and body
+        split = serialized.split(BODY_SEPARATOR)
+        headers = split[0]
+        body = split[1]
+
+        # add headers
+        for header in headers.split(HEADER_SEPARATOR):
+            if header == "":
+                continue
+            split = header.split(":")
+            self.add_header(Header(split[0], split[1]))
+
+        # set body
+        self.set_body(body)
+
+class Header:
+    """
+    Represents a header in a network message.
+    """
+    def __init__(self, name, value=""):
+        self.name = name
+        self.value = value
+
+    def __str__(self):
+        return self.name + ":" + self.value

@@ -23,6 +23,7 @@ class SimpleServer:
         self.on_connection = ServerCallback()
         self.on_message = ServerCallback()
         self.on_disconnect = ServerCallback()
+        self.on_update = ServerCallback()
 
         self.clients = []
 
@@ -61,6 +62,28 @@ class SimpleServer:
         """
         self.__handle_new_connections()
         self.__update_existing_connections()
+        self.on_update.invoke()
+
+    def broadcast(self, message, exclusions=[]):
+        """
+        Broadcasts a message to all clients.
+        """
+        for client in self.clients:
+            if client not in exclusions:
+                client.send(message)
+
+    def get_clients(self):
+        """
+        Returns a list of all clients.
+        """
+        return self.clients
+
+    def messsage_clients(self, clients, message):
+        """
+        Sends a message to a list of clients.
+        """
+        for client in clients:
+            client.send(message)
 
     def __internal_start(self):
         """

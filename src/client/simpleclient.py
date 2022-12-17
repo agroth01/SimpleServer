@@ -7,6 +7,7 @@ class SimpleClient:
     """
     def __init__(self):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.socket.setblocking(False)
 
     def connect(self, host, port):
         """
