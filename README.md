@@ -10,9 +10,8 @@ from simpleserver import SimpleServer
 from simpleserver.networking import NetworkMessage
 
 def on_message(client, message):
-
     if message.has_header("handshake"):
-        # create a response to hands
+        # create a response to handshake
         response = NetworkMessage()
         response.add_header("handshake", value="example")
         response.set_body("Hello from the server!")
