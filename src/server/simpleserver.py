@@ -3,6 +3,7 @@ import socket
 import time
 from src.server.server_logging import Logger, LoggingLevel
 from src.server.client_connection import ClientConnection
+from src.networking.network_message import NetworkMessage
 
 DEFAULT_TICK_RATE = 120
 
@@ -120,8 +121,10 @@ class SimpleServer:
                 # we need to test if the message is empty.
                 # if it is, we don't want to invoke the callback.
                 if message != "":
+                    # convert message into network message
+                    message = NetworkMessage.decode(message)
                     self.on_message.invoke(client, message)
-                    self.logger.log(f"Message from {client.address}: {message}", LoggingLevel.DEBUG)
+                    self.logger.log(f"Message from {client.address}: {message.body}", LoggingLevel.DEBUG)
             else:
                 self.clients.remove(client)
                 self.on_disconnect.invoke(client)

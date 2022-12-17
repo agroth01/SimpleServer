@@ -16,7 +16,7 @@ class ClientConnection:
             data = self.socket.recv(1024)
             if not data:
                 return (False, "Socket closed")
-            return (True, data.decode("utf-8"))
+            return (True, data)
         except Exception as e:
             return (False, str(e))
 
