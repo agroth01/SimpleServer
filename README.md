@@ -68,6 +68,28 @@ server.broadcast(message)
 server.broadcast(message, exclusions=[client4])
 ```
 
+### Client
+In order to not restrict developers in how they implement their client, the SimpleClient class is more open to how it is used.
+```python
+# create the instance of the client. this does not connect to anything, as you might want to connect later.
+client = SimpleClient()
+
+# attempt to connect to a server by ip and port. this method will return a bool indicating if the connection
+# was succesfull or not, as well as a message for handling cases where connection could not be established.
+success, message = client.connect("localhost", 1234)
+```
+
+Besides connecting to a server, the client only exposes two high level methods for sending and receiving data from the server. How and when you chose to call these are up to the specific needs of the application.
+```python
+# this will send a NetworkMessage to the server. it should be noted that you can also send raw bytes directly, but the server will decode
+# the bytes into a headerless NetworkMessage upon reception.
+client.send(message)
+
+# calling read() will attempt to receive any data from the server. this will either return
+# a NetworkMessage instance or None. You will have to check for this.
+data = client.read()
+```
+
 ### NetworkMessage
 To allow for more flexible and easy communication between the server and client, the class NetworkMessage is used instead of sending raw data yourself. An instance of NetworkMessage consists of headers and a body
 
