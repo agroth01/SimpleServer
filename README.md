@@ -34,7 +34,7 @@ server.start()
 ```
 
 ### Client
-By design, the client implementation is a lot more open to implementation. This is to ensure that the client side application is not restricted by the library. 
+By design, the client implementation is a lot more open, to facilitate integration into any application with less restrictions.
 ```python
 from simpleserver import SimpleClient
 from simpleserver.networking import NetworkMessage
