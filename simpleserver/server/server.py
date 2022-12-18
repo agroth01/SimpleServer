@@ -1,9 +1,9 @@
 import threading
 import socket
 import time
-from src.server.server_logging import Logger, LoggingLevel
-from src.server.client_connection import ClientConnection
-from src.networking.network_message import NetworkMessage
+from simpleserver.server.server_logging import Logger, LoggingLevel
+from simpleserver.server.client_connection import ClientConnection
+from simpleserver.networking.network_message import NetworkMessage
 
 DEFAULT_TICK_RATE = 120
 

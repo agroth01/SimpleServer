@@ -1,5 +1,4 @@
-from src.networking.network_message import NetworkMessage
-import socket
+from simpleserver.networking.network_message import NetworkMessage
 
 class ClientConnection:
     """

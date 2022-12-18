@@ -7,11 +7,11 @@ class NetworkMessage:
         self.headers = []
         self.body = ""
 
-    def add_header(self, header):
+    def add_header(self, header_name, value=None):
         """
         Adds a header to the message.
         """
-        self.headers.append(header)
+        self.headers.append(Header(header_name, value))
 
     def has_header(self, header_name):
         """

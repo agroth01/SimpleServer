@@ -1,21 +1,21 @@
 import socket
-from src.networking.network_message import NetworkMessage
+from simpleserver.networking.network_message import NetworkMessage
 
 class SimpleClient:
     """
     Simple client class for connection to the simpleserver.
     """
     def __init__(self):
-        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.socket.setblocking(False)
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)      
 
     def connect(self, host, port):
         """
         Attempts to connect to the server.
         Will return a tuple with format (success, message)
         """
-        try:
+        try:           
             self.socket.connect((host, port))
+            self.socket.setblocking(False)
             return (True, "Connection successful")
         except Exception as e:
             return (False, str(e))
